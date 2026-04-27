@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buy — Legal Authority Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pink:#FF1F8E; --orange:#FF6B00; --lime:#C8D400; --teal:#00B5B8;
+  --black:#0A0A0A; --card:#141414; --card2:#111111; --border:#222;
+  --white:#F7F5F0; --gray:#888; --mid:#444;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--black);color:var(--white);font-family:'Inter',sans-serif;overflow-x:hidden;}
+
+/* NAV */
+.top-bar{height:5px;background:linear-gradient(90deg,var(--pink) 0%,var(--orange) 33%,var(--lime) 66%,var(--teal) 100%);}
+.nav{position:sticky;top:5px;z-index:100;background:rgba(10,10,10,0.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);padding:0 40px;}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px;}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.05em;color:var(--white);}
+.nav-logo span{color:var(--pink);}
+.nav-links{display:flex;gap:28px;}
+.nav-links a{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gray);text-decoration:none;transition:color 0.2s;}
+.nav-links a:hover{color:var(--white);}
+.nav-promo{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.1em;background:var(--orange);color:var(--white);padding:6px 14px;border-radius:3px;}
+
+/* HERO */
+.hero{max-width:1200px;margin:0 auto;padding:64px 40px 48px;}
+.hero-eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--lime);margin-bottom:16px;}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(56px,8vw,96px);line-height:0.95;letter-spacing:0.02em;margin-bottom:16px;}
+.hero h1 span{color:var(--pink);}
+.hero-sub{font-size:16px;color:var(--gray);max-width:560px;line-height:1.7;margin-bottom:32px;}
+.promo-banner{display:inline-flex;align-items:center;gap:16px;background:rgba(255,107,0,0.1);border:1px solid var(--orange);border-radius:5px;padding:14px 20px;}
+.promo-banner .pb-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--orange);}
+.promo-banner .pb-text{font-size:14px;color:var(--white);font-weight:600;}
+.promo-banner .pb-cta{font-family:'DM Mono',monospace;font-size:11px;color:var(--orange);letter-spacing:0.1em;text-transform:uppercase;}
+
+/* STANDALONE WARNING */
+.standalone-warning{max-width:1200px;margin:0 auto 48px;padding:0 40px;}
+.sw-inner{background:rgba(255,31,142,0.06);border:1px solid rgba(255,31,142,0.3);border-radius:6px;padding:18px 24px;display:flex;gap:20px;align-items:flex-start;}
+.sw-icon{font-size:20px;flex-shrink:0;margin-top:1px;}
+.sw-text{font-size:13px;color:#BBBBBB;line-height:1.7;}
+.sw-text strong{color:var(--white);}
+.sw-items{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+.sw-tag{font-family:'DM Mono',monospace;font-size:11px;background:rgba(255,31,142,0.1);border:1px solid rgba(255,31,142,0.3);color:var(--pink);padding:4px 10px;border-radius:3px;}
+
+/* CATEGORY NAV */
+.cat-nav{max-width:1200px;margin:0 auto 40px;padding:0 40px;}
+.cat-nav-inner{display:flex;gap:8px;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:0;}
+.cat-btn{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;padding:10px 18px;background:transparent;border:none;border-bottom:2px solid transparent;color:var(--gray);cursor:pointer;transition:all 0.2s;margin-bottom:-1px;}
+.cat-btn:hover{color:var(--white);}
+.cat-btn.active{color:var(--white);border-bottom-color:var(--pink);}
+
+/* SECTION */
+.section{max-width:1200px;margin:0 auto 72px;padding:0 40px;}
+.section-head{display:flex;align-items:baseline;gap:16px;margin-bottom:32px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+.section-head h2{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:0.03em;}
+.section-head .sh-count{font-family:'DM Mono',monospace;font-size:11px;color:var(--gray);letter-spacing:0.1em;}
+
+/* PRODUCT GRID */
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px;}
+.product-grid.wide{grid-template-columns:repeat(auto-fill,minmax(480px,1fr));}
+
+/* PRODUCT CARD */
+.product-card{background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;transition:border-color 0.2s,transform 0.2s;}
+.product-card:hover{border-color:var(--mid);transform:translateY(-2px);}
+
+.card-top{padding:24px 24px 0;}
+.card-badges{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.badge{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;padding:4px 10px;border-radius:3px;}
+.badge-active{background:rgba(200,212,0,0.12);color:var(--lime);border:1px solid rgba(200,212,0,0.3);}
+.badge-soon{background:rgba(255,107,0,0.1);color:var(--orange);border:1px solid rgba(255,107,0,0.3);}
+.badge-prerelease{background:rgba(255,31,142,0.1);color:var(--pink);border:1px solid rgba(255,31,142,0.3);}
+.badge-standalone{background:rgba(0,181,184,0.1);color:var(--teal);border:1px solid rgba(0,181,184,0.3);}
+.badge-dfy{background:rgba(255,31,142,0.15);color:var(--pink);border:1px solid var(--pink);}
+.badge-membership{background:rgba(0,181,184,0.12);color:var(--teal);border:1px solid rgba(0,181,184,0.3);}
+.badge-count{background:rgba(136,136,136,0.15);color:var(--gray);border:1px solid rgba(136,136,136,0.2);}
+
+.card-name{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.03em;line-height:1.05;margin-bottom:6px;}
+.card-tagline{font-size:13px;color:var(--gray);line-height:1.6;margin-bottom:16px;}
+
+.card-features{padding:0 24px 16px;}
+.card-features ul{list-style:none;}
+.card-features ul li{font-size:12.5px;color:#AAAAAA;padding:4px 0;padding-left:14px;position:relative;line-height:1.5;}
+.card-features ul li::before{content:'—';position:absolute;left:0;color:var(--mid);}
+
+.card-includes{margin:0 24px 16px;padding:10px 14px;background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:4px;font-family:'DM Mono',monospace;font-size:11px;color:var(--gray);line-height:1.5;}
+.card-includes span{color:var(--white);}
+
+.card-warning{margin:0 24px 16px;padding:8px 12px;background:rgba(255,107,0,0.06);border:1px solid rgba(255,107,0,0.2);border-radius:4px;font-size:11.5px;color:#BB8800;line-height:1.5;}
+
+.card-bottom{margin-top:auto;padding:16px 24px 20px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+
+.price-block{}
+.price-full{font-size:11px;font-family:'DM Mono',monospace;color:var(--gray);text-decoration:line-through;margin-bottom:2px;}
+.price-promo{font-family:'Bebas Neue',sans-serif;font-size:34px;line-height:1;}
+.price-sub{font-size:11px;color:var(--gray);font-family:'DM Mono',monospace;margin-top:2px;}
+
+.btn-buy{display:inline-block;padding:13px 28px;border-radius:4px;font-family:'DM Mono',monospace;font-size:12px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;transition:all 0.2s;white-space:nowrap;cursor:pointer;border:none;}
+.btn-buy-primary{background:var(--pink);color:var(--white);}
+.btn-buy-primary:hover{opacity:0.88;}
+.btn-buy-teal{background:var(--teal);color:var(--black);}
+.btn-buy-teal:hover{opacity:0.88;}
+.btn-buy-lime{background:var(--lime);color:var(--black);}
+.btn-buy-lime:hover{opacity:0.88;}
+.btn-buy-outline{background:transparent;border:1px solid var(--pink);color:var(--pink);}
+.btn-buy-outline:hover{background:var(--pink);color:var(--white);}
+.btn-buy-waitlist{background:transparent;border:1px solid var(--mid);color:var(--gray);}
+.btn-buy-waitlist:hover{border-color:var(--white);color:var(--white);}
+
+/* MEMBERSHIP CARDS */
+.membership-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.mem-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:28px 24px;display:flex;flex-direction:column;transition:border-color 0.2s;}
+.mem-card:hover{border-color:var(--mid);}
+.mem-card.featured{border-color:var(--pink);}
+.mem-card .mc-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:8px;}
+.mem-card h3{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.03em;margin-bottom:4px;}
+.mem-card .mc-price{font-size:26px;font-weight:800;margin-bottom:4px;}
+.mem-card .mc-price-sub{font-family:'DM Mono',monospace;font-size:11px;color:var(--gray);margin-bottom:16px;}
+.mem-card p{font-size:13px;color:var(--gray);line-height:1.65;margin-bottom:16px;}
+.mem-card ul{list-style:none;margin-bottom:20px;flex:1;}
+.mem-card ul li{font-size:12.5px;color:#AAAAAA;padding:5px 0;padding-left:16px;position:relative;line-height:1.5;border-bottom:1px solid var(--border);}
+.mem-card ul li:last-child{border-bottom:none;}
+.mem-card ul li::before{content:'✓';position:absolute;left:0;font-size:11px;}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:40px;text-align:center;font-family:'DM Mono',monospace;font-size:11px;color:#444;line-height:2;max-width:1200px;margin:0 auto;}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .membership-grid{grid-template-columns:1fr;}
+  .nav-links{display:none;}
+  .product-grid{grid-template-columns:1fr;}
+  .product-grid.wide{grid-template-columns:1fr;}
+}
+@media(max-width:600px){
+  .hero{padding:40px 20px 32px;}
+  .section{padding:0 20px;}
+  .standalone-warning{padding:0 20px;}
+  .cat-nav{padding:0 20px;}
+  .nav{padding:0 20px;}
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-logo">Legal Authority <span>Lab</span></div>
+    <div class="nav-links">
+      <a href="#suites">Suites</a>
+      <a href="#standalones">Standalones</a>
+      <a href="#marketing">Marketing</a>
+      <a href="#dfy">Done For You</a>
+      <a href="#memberships">Memberships</a>
+    </div>
+    <div class="nav-promo">30-Day Promo — 25% Off</div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Legal Authority Lab — Bot Catalog</div>
+  <h1>AI Built for<br><span>Law Firms.</span></h1>
+  <p class="hero-sub">Not built by technologists who have never set foot in a courtroom. Built inside a real, active Florida family law firm — tested on real cases, real clients, real deadlines. One-time purchase. No subscriptions.</p>
+  <div class="promo-banner">
+    <div>
+      <div class="pb-label">Limited Time</div>
+      <div class="pb-text">25% off all self-install products — 30 days only</div>
+    </div>
+    <div class="pb-cta">Founding pricing ↓</div>
+  </div>
+</div>
+
+<!-- STANDALONE WARNING -->
+<div class="standalone-warning">
+  <div class="sw-inner">
+    <div class="sw-icon">⚠</div>
+    <div>
+      <div class="sw-text"><strong>Before you buy — check this.</strong> Several standalone bots are already included in larger suites. Don't pay twice.</div>
+      <div class="sw-items">
+        <span class="sw-tag">MSA Bot → inside Settlement Suite + Divorce Suite</span>
+        <span class="sw-tag">Parenting Plan Bot → inside Settlement Suite + Divorce Suite + Paternity Suite</span>
+        <span class="sw-tag">ED Chart Bot → inside Discovery Suite (Stage 8)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CAT NAV -->
+<div class="cat-nav">
+  <div class="cat-nav-inner">
+    <button class="cat-btn active" onclick="scrollTo('suites',this)">Suites</button>
+    <button class="cat-btn" onclick="scrollTo('standalones',this)">Standalones</button>
+    <button class="cat-btn" onclick="scrollTo('marketing',this)">Marketing</button>
+    <button class="cat-btn" onclick="scrollTo('dfy',this)">Done For You</button>
+    <button class="cat-btn" onclick="scrollTo('memberships',this)">Memberships</button>
+  </div>
+</div>
+
+<!-- ═══ ACTIVE SUITES ════════════════════════════════════ -->
+<div class="section" id="suites">
+  <div class="section-head">
+    <h2>Active Suites</h2>
+    <span class="sh-count">Ready to deploy · self-install</span>
+  </div>
+
+  <div class="product-grid">
+
+    <!-- DISCOVERY SUITE -->
+    <div class="product-card">
+      <div class="card-top">
+        <div class="card-badges"><span class="badge badge-active">Active</span><span class="badge badge-count">8 bots</span></div>
+        <div class="card-name" style="color:var(--pink);">The Discovery Suite</div>
+        <div class="card-tagline">Complete financial discovery workflow for Florida family law. Intake through equitable distribution.</div>
+      </div>
+      <div class="card-features">
+        <ul>
+          <li>Financial Intake Bot — case setup and Stage 2 memo</li>
+          <li>FA Preliminary Bot — affidavit audit before docs arrive</li>
+          <li>FA Cross-Check Bot — affidavit vs. supporting documents</li>
+          <li>Income Analysis Bot — self-employment, bonus, rental, variable</li>
+          <li>Discovery Gap Bot — case-wide gap chart + mediation readiness memo</li>
+          <li>ED Chart Bot — equitable distribution inventory + equalizer model</li>
+          <li>Advanced Discovery Bot — interrogatories, RFPs, RFAs, subpoenas</li>
+          <li>Case Project Bot — master orchestrator, routes between all bots</li>
+        </ul>
+      </div>
+      <div class="card-bottom">
+        <div class="price-block">
+          <div class="price-full">$5,000</div>
+          <div class="price-promo" style="color:var(--pink);">$3,750</div>
+          <div class="price-sub">one-time · 30-day promo</div>
+        </div>
+        <a href="https://buy.stripe.com/7sY00k3NH28X7gy71Db3q0r" class="btn-buy btn-buy-primary">Buy Now →</a>
+      </div>
+    </div>
+
+    <!-- GAL SUITE -->
+    <div class="product-card">
+      <div class="card-top">
+        <div class="card-badges"><span class="badge badge-active">Active</span><span class="badge badge-count">7 bots</span></div>
+        <div class="card-name" style="color:var(--teal);">The GAL Suite</div>
+        <div class="card-tagline">Complete Guardian ad Litem case management. Appointment through final report filing.</div>
+      </div>
+      <div class="card-features">
+        <ul>
+          <li>GAL Case Intake Bot — Order of Appointment through case profile</li>
+          <li>Investigation Tracker Bot — running log of every contact and record</li>
+          <li>Chronology Builder Bot — source-attributed case timeline</li>
+          <li>Source Interview Processor — structures notes into report-ready summaries</li>
+          <li>GAL Report Drafting Bot — interim, second, and final reports</li>
+          <li>GAL Document Drafting Bot — contracts, orders, motions, correspondence</li>
+          <li>GAL QC Bot — final gate before anything is filed</li>
+        </ul>
+      </div>
+      <div class="card-bottom">
+        <div class="price-block">
+          <div class="price-full">$2,500</div>
+          <div class="price-promo" style="color:var(--teal);">$1,875</div>
+          <div class="price-sub">one-time · 30-day promo</div>
+        </div>
+        <a href="https://buy.stripe.com/eVq7sM3NH7th9oGfy9b3q0q" class="btn-buy btn-buy-teal">Buy Now →</a>
+      </div>
+    </div>
+
+    <!-- DRAFTING BOT -->
+    <div class="product-card">
+      <div class="card-top">
+        <div class="card-badges"><span class="badge badge-active">Active</span><span class="badge badge-standalone">Standalone</span></div>
+        <div class="card-name" style="color:var(--orange);">The Drafting Bot</div>
+        <div class="card-tagline">Florida family law pleadings and motions drafting. Petitions, responses, motions, proposed orders.</div>
+      </div>
+      <div class="card-features">
+        <ul>
+          <li>Petitions, responses, counter-petitions, and motions</li>
+          <li>Proposed orders and correspondence</li>
+          <li>Pre-loaded with FL statutes, caselaw, and procedural rules</li>
+          <li>Drafts to FMLG standards — not generic AI output</li>
+          <li>Self-install — most firms running within the hour</li>
+        </ul>
+      </div>
+      <div class="card-bottom">
+        <div class="price-block">
+          <div class="price-full">$1,500</div>
+          <div class="price-promo" style="color:var(--orange);">$1,125</div>
+          <div class="price-sub">one-time · 30-day promo</div>
+        </div>
+        <a href="https://buy.stripe.com/fZu8wQ5VP7thbwOgCdb3q0p" class="btn-buy btn-buy-primary">Buy Now →</a>
+      </div>
+    </div>
+
+    <!-- CONTEMPT SUITE -->
+    <div class="product-card">
+      <div class="card-top">
+        <div class="card-badges"><span class="badge badge-active">Active</span><span class="badge badge-count">2 bots</span></div>
+        <div class="card-name" style="color:var(--lime);">The Contempt Suite</div>
+        <div class="card-tagline">Both sides of a Florida family law contempt matter. One bot for the movant, one for the defense.</div>
+      </div>
+      <div class="card-features">
+        <ul>
+          <li>Movant Bot — four-element proof, motion drafting, remedy selection, hearing prep</li>
+          <li>Defense Bot — defense identification, inability-to-comply analysis, response drafting</li>
+          <li>Covers civil contempt, criminal contempt, purge conditions, attorney's fees</li>
+          <li>Pre-loaded with FL contempt case law and procedural requirements</li>
+        </ul>
+      </div>
+      <div class="card-bottom">
+        <div class="price-block">
+          <div class="price-full">$497</div>
+          <div class="price-promo" style="color:var(--lime);">$373</div>
+          <div class="price-sub">one-time · 30-day promo</div>
+        </div>
+        <a href="https://buy.stripe.com/5kQfZigAt6pdfN44Tvb3q0o" class="btn-buy btn-buy-lime">Buy Now →</a>
+      </div>
+    </div>
+
+    <!-- SETTLEMENT SUITE -->
+    <div class="product-card">
+      <div class="card-top">
+        <div class="card-badges"><span class="badge badge-prerelease">Pre-Release</span><span class="badge badge-count">6–10 bots</span></div>
+        <div class="card-name" style="color:var(--pink);">The Settlement Suite</div>
+        <div class="card-tagline">MSA and Parenting Plan drafting suite. Standalone or runs directly off Discovery Suite output.</div>
+      </div>
+      <div class="card-features">
+        <ul>
+          <li>Issue framing and negotiation framework before drafting begins</li>
+          <li>MSA Bot — every term, every provision, FL statutory requirements</li>
+          <li>Parenting Plan Bot — timesharing, parental responsibility, relocation</li>
+          <li>QC pass before anything goes to client or opposing counsel</li>
+          <li>Integrates with Discovery Suite ED Chart Bot output — no re-entry</li>
+        </ul>
+      </div>
+      <div class="card-includes">Not included in any other package or suite. <span>Standalone product.</span></div>
+      <div class="card-bottom">
+        <div class="price-block">
+          <div class="price-promo" style="color:var(--pink);">$1,999</div>
+          <div class="price-sub">pre-release · increases to $2,499 at launch</div>
+        </div>
+        <a href="https://buy.stripe.com/14AaEY83X6pd8kCadPb3q0n" class="btn-buy btn-buy-primary">Buy Now →</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ COMING SOON SUITES ════════════════════════════════ -->
+<div class="section">
+  <div class="section-head">
+    <h2>Coming Soon — Pre-Order Now</h2>
+    <span class="sh-count">Lock in promo pricing · delivered at launch</span>
+  </div>
+  <div class="product-grid">
+
+    <div class="product-card">
+      <div class="card-top">
+        <div class="card-badges"><span class="badge badge-soon">Coming Soon</span><span class="badge badge-count">8+ bots</span></div>
+        <div class="card-name" style="color:var(--pink);">The Divorce Suite</div>
+        <div class="card-tagline">Complete dissolution workflow — contested and uncontested, with and without children. Includes PP Bot + MSA Bot.</div>
+      </div>
+      <div class="card-includes"><span>Includes:</span> Parenting Plan Bot + MSA Bot + full dissolution workflow</div>
+      <div class="card-warning">If you're buying the MSA Bot or Parenting Plan Bot separately — buy this suite instead. Better value.</div>
+      <div class="card-bottom">
+        <div class="price-block">
+          <div class="price-promo" style="color:var(--pink);">$2,497</div>
+          <div class="price-sub">pre-order · price locks at purchase</div>
+        </div>
+        <a href="https://buy.stripe.com/aFabJ24RLeVJfN499Lb3q0m" class="btn-buy btn-buy-outline">Pre-Order →</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="card-top">
+        <div class="card-badges"><span class="badge badge-soon">Coming Soon</span><span class="badge badge-count">5+ bots</span></div>
+        <div class="card-name" style="color:var(--teal);">The Paternity Suite</div>
+        <div class="card-tagline">Complete paternity workflow for Florida. Establishment, parenting plan, child support, timesharing. Includes PP Bot.</div>
+      </div>
+      <div class="card-includes"><span>Includes:</span> Parenting Plan Bot + full paternity workflow</div>
+      <div class="card-warning">If you're buying the Parenting Plan Bot separately — check if this suite fits your practice first.</div>
+      <div class="card-bottom">
+        <div class="price-block">
+          <div class="price-promo" style="color:var(--teal);">$1,497</div>
+          <div class="price-sub">pre-order · price locks at purchase</div>
+        </div>
+        <a href="https://buy.stripe.com/eVq7sMgAt6pd6cufy9b3q0l" class="btn-buy btn-buy-outline">Pre-Order →</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="card-top">
+        <div class="card-badges"><span class="badge badge-soon">Coming Soon</span></div>
+        <div class="card-name" style="color:var(--lime);">The Modification Suite</div>
+        <div class="card-tagline">Post-judgment modification workflow. Substantial change analysis, parenting plan, child support, alimony modification.</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price-block">
+          <div class="price-promo" style="color:var(--lime);">$497</div>
+          <div class="price-sub">pre-order · price locks at purchase</div>
+        </div>
+        <a href="https://buy.stripe.com/8x2bJ2bg98xl6cugCdb3q0k" class="btn-buy btn-buy-outline">Pre-Order →</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="card-top">
+        <div class="card-badges"><span class="badge badge-soon">Coming Soon</span><span class="badge badge-count">3 tracks</span></div>
+        <div class="card-name" style="color:var(--teal);">The Name Change Suite</div>
+        <div class="card-tagline">Florida name change for individuals, minor children, and families. Three tracks — one suite.</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price-block">
+          <div class="price-promo" style="color:var(--teal);">$599</div>
+          <div class="price-sub">pre-order · price locks at purchase</div>
+        </div>
+        <a href="https://buy.stripe.com/5kQaEY5VP00P7gybhTb3q0j" class="btn-buy btn-buy-outline">Pre-Order →</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ STANDALONE BOTS ═══════════════════════════════════ -->
+<div class="section" id="standalones">
+  <div class="section-head">
+    <h2>Standalone Bots</h2>
+    <span class="sh-count">Individual tools · active now</span>
+  </div>
+  <div class="product-grid">
+
+    <div class="product-card">
+      <div class="card-top">
+        <div class="card-badges"><span class="badge badge-active">Active</span><span class="badge badge-standalone">Standalone</span></div>
+        <div class="card-name" style="color:var(--orange);">Alimony Assessment Bot</div>
+        <div class="card-tagline">Florida alimony eligibility, type, amount, and duration under the 2023 statute.</div>
+      </div>
+      <div class="card-features">
+        <ul>
+          <li>Eligibility and all statutory factor analysis</li>
+          <li>Type: bridge-the-gap, rehabilitative, or durational</li>
+          <li>Amount framework — need and ability to pay</li>
+          <li>Cohabitation and retirement modification analysis</li>
+        </ul>
+      </div>
+      <div class="card-bottom">
+        <div class="price-block">
+          <div class="price-promo" style="color:var(--orange);">$799</div>
+          <div class="price-sub">one-time purchase</div>
+        </div>
+        <a href="https://buy.stripe.com/28E28s981eVJ0Sa0Dfb3q0i" class="btn-buy btn-buy-primary">Buy Now →</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="card-top">
+        <div class="card-badges"><span class="badge badge-active">Active</span><span class="badge badge-standalone">Standalone</span></div>
+        <div class="card-name" style="color:var(--lime);">ED Chart Bot</div>
+        <div class="card-tagline">Equitable distribution inventory, equalizer model, and mediation settlement scenarios.</div>
+      </div>
+      <div class="card-includes">Also included in: <span>Discovery Suite (Stage 8)</span> — don't buy if you have the suite.</div>
+      <div class="card-features">
+        <ul>
+          <li>Complete ED inventory — marital vs. non-marital classification</li>
+          <li>Equalization payment calculation</li>
+          <li>Multiple distribution scenario modeling</li>
+          <li>Feeds Settlement Suite and Mediation Prep Bot</li>
+        </ul>
+      </div>
+      <div class="card-bottom">
+        <div class="price-block">
+          <div class="price-promo" style="color:var(--lime);">$899</div>
+          <div class="price-sub">one-time purchase</div>
+        </div>
+        <a href="https://buy.stripe.com/14A5kE83X5l944mfy9b3q0h" class="btn-buy btn-buy-lime">Buy Now →</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="card-top">
+        <div class="card-badges"><span class="badge badge-active">Active</span><span class="badge badge-standalone">Standalone</span></div>
+        <div class="card-name" style="color:var(--pink);">MSA Bot</div>
+        <div class="card-tagline">Standalone Marital Settlement Agreement drafting. Every term, every provision.</div>
+      </div>
+      <div class="card-warning">⚠ Already included in the Settlement Suite and Divorce Suite. Check before purchasing.</div>
+      <div class="card-features">
+        <ul>
+          <li>Full MSA to FL statutory requirements</li>
+          <li>Property, support, debt, tax provisions, final judgment</li>
+          <li>Contested and uncontested workflows</li>
+        </ul>
+      </div>
+      <div class="card-bottom">
+        <div class="price-block">
+          <div class="price-promo" style="color:var(--pink);">$1,899</div>
+          <div class="price-sub">one-time purchase</div>
+        </div>
+        <a href="https://buy.stripe.com/9B66oI4RL8xleJ00Dfb3q0g" class="btn-buy btn-buy-primary">Buy Now →</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="card-top">
+        <div class="card-badges"><span class="badge badge-active">Active</span><span class="badge badge-standalone">Standalone</span></div>
+        <div class="card-name" style="color:var(--teal);">Parenting Plan Bot</div>
+        <div class="card-tagline">Standalone Florida Parenting Plan drafting. Dissolution and paternity. Contested and uncontested.</div>
+      </div>
+      <div class="card-warning">⚠ Already included in Settlement Suite, Divorce Suite, and Paternity Suite. Check before purchasing.</div>
+      <div class="card-features">
+        <ul>
+          <li>Regular, holiday, and summer timesharing schedules</li>
+          <li>Parental responsibility and decision-making by category</li>
+          <li>Relocation restrictions under FL Section 61.13001</li>
+        </ul>
+      </div>
+      <div class="card-bottom">
+        <div class="price-block">
+          <div class="price-promo" style="color:var(--teal);">$999</div>
+          <div class="price-sub">one-time purchase</div>
+        </div>
+        <a href="https://buy.stripe.com/14AcN683XfZN44m85Hb3q0f" class="btn-buy btn-buy-teal">Buy Now →</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ MARKETING ════════════════════════════════════════ -->
+<div class="section" id="marketing">
+  <div class="section-head">
+    <h2>Marketing Suite</h2>
+    <span class="sh-count">Build Your Brand Bot required first</span>
+  </div>
+  <div class="product-grid">
+
+    <div class="product-card">
+      <div class="card-top">
+        <div class="card-badges"><span class="badge badge-active">Active</span><span class="badge badge-standalone">Start Here</span></div>
+        <div class="card-name" style="color:var(--orange);">Build Your Brand Bot</div>
+        <div class="card-tagline">Builds your firm's voice, positioning, ideal client profile, and content strategy. Required before all other marketing bots.</div>
+      </div>
+      <div class="card-features">
+        <ul>
+          <li>Voice and tone, positioning, ideal client profile</li>
+          <li>Visual identity direction and content strategy</li>
+          <li>Produces a brand kit that powers every downstream marketing bot</li>
+          <li>Jurisdiction-agnostic — any attorney, any state</li>
+        </ul>
+      </div>
+      <div class="card-bottom">
+        <div class="price-block">
+          <div class="price-full">$497</div>
+          <div class="price-promo" style="color:var(--orange);">$373</div>
+          <div class="price-sub">one-time · 30-day promo</div>
+        </div>
+        <a href="https://buy.stripe.com/8x200kac57thgR8dq1b3q0c" class="btn-buy btn-buy-primary">Buy Now →</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="card-top">
+        <div class="card-badges"><span class="badge badge-active">Active</span></div>
+        <div class="card-name" style="color:var(--teal);">Email, Blog & SEO Bot</div>
+        <div class="card-tagline">Email campaigns, blog posts, and SEO-optimized content. Runs on your brand kit.</div>
+      </div>
+      <div class="card-includes">Requires: <span>Build Your Brand Bot</span></div>
+      <div class="card-features">
+        <ul>
+          <li>Email campaigns and nurture sequences in your voice</li>
+          <li>Full-length SEO blog posts with H2/H3 structure and meta data</li>
+          <li>Targets keywords your ideal clients are actually searching</li>
+        </ul>
+      </div>
+      <div class="card-bottom">
+        <div class="price-block">
+          <div class="price-full">$497</div>
+          <div class="price-promo" style="color:var(--teal);">$373</div>
+          <div class="price-sub">one-time · 30-day promo</div>
+        </div>
+        <a href="https://buy.stripe.com/4gM8wQ83X3d11WeadPb3q0s" class="btn-buy btn-buy-teal">Buy Now →</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="card-top">
+        <div class="card-badges"><span class="badge badge-active">Active</span></div>
+        <div class="card-name" style="color:var(--lime);">Social Media & Video Bot</div>
+        <div class="card-tagline">High-volume short-form content for Instagram, LinkedIn, Facebook, Reels, and video scripts.</div>
+      </div>
+      <div class="card-includes">Requires: <span>Build Your Brand Bot</span></div>
+      <div class="card-features">
+        <ul>
+          <li>Platform-specific formatting for every channel</li>
+          <li>Video scripts built for talking-head format</li>
+          <li>Educational, authority-building, and promotional content</li>
+        </ul>
+      </div>
+      <div class="card-bottom">
+        <div class="price-block">
+          <div class="price-full">$1,500</div>
+          <div class="price-promo" style="color:var(--lime);">$1,125</div>
+          <div class="price-sub">one-time · 30-day promo</div>
+        </div>
+        <a href="#" class="btn-buy btn-buy-lime">Buy Now →</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ DONE FOR YOU ══════════════════════════════════════ -->
+<div class="section" id="dfy">
+  <div class="section-head">
+    <h2>Done For You</h2>
+    <span class="sh-count">Strategy call required · custom builds</span>
+  </div>
+  <div class="product-grid wide">
+
+    <div class="product-card">
+      <div class="card-top">
+        <div class="card-badges"><span class="badge badge-dfy">Done For You</span><span class="badge badge-active">Active</span></div>
+        <div class="card-name" style="color:var(--pink);">Family Law Suite — Done For You</div>
+        <div class="card-tagline">Every Florida family law bot custom-configured to your firm by Leisa. Not self-install. She builds your firm's context directly into Claude.</div>
+      </div>
+      <div class="card-features">
+        <ul>
+          <li>Every active FL family law bot custom-built and configured to your firm</li>
+          <li>Leisa sets up Claude directly — output reflects your language and standards</li>
+          <li>Automatic access to all in-development bots as they release, custom-configured</li>
+          <li>Quarterly updates as FL law changes — not annual</li>
+          <li>Annual update plan locked at $2,499/year for life</li>
+          <li>25% off every new FL family law bot added to the catalog</li>
+        </ul>
+      </div>
+      <div class="card-bottom">
+        <div class="price-block">
+          <div class="price-full">$20,000</div>
+          <div class="price-promo" style="color:var(--pink);">$15,000</div>
+          <div class="price-sub">30-day promo · strategy call required</div>
+        </div>
+        <a href="https://calendly.com/leisawintz/lal-custom-ai-strategy" class="btn-buy btn-buy-primary">Book Strategy Call →</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="card-top">
+        <div class="card-badges"><span class="badge badge-dfy">Done For You</span><span class="badge badge-active">Active</span></div>
+        <div class="card-name" style="color:var(--teal);">Intake & Onboarding Suite</div>
+        <div class="card-tagline">Custom-built lead intake, case screening, and client onboarding — connected to your practice management platform.</div>
+      </div>
+      <div class="card-features">
+        <ul>
+          <li>Lead intake bot — screens against your ideal client profile</li>
+          <li>Case screening workflow — conflict check trigger, intake path</li>
+          <li>Client onboarding bot — post-hire forms and engagement letters</li>
+          <li>Custom-configured to Smokeball, Clio, or your platform</li>
+          <li>Retainer and engagement agreement integration</li>
+        </ul>
+      </div>
+      <div class="card-bottom">
+        <div class="price-block">
+          <div class="price-full">$4,999</div>
+          <div class="price-promo" style="color:var(--teal);">$3,800</div>
+          <div class="price-sub">30-day promo · strategy call required</div>
+        </div>
+        <a href="https://calendly.com/leisawintz/lal-custom-ai-strategy" class="btn-buy btn-buy-teal">Book Strategy Call →</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ MEMBERSHIPS ═══════════════════════════════════════ -->
+<div class="section" id="memberships">
+  <div class="section-head">
+    <h2>Memberships</h2>
+    <span class="sh-count">Founding rate locked for life at sign-up · 1-year contract</span>
+  </div>
+  <div class="membership-grid">
+
+    <div class="mem-card">
+      <div class="mc-eyebrow" style="color:var(--lime);">Maintenance Only</div>
+      <h3>Bot Maintenance Plan</h3>
+      <div class="mc-price" style="color:var(--lime);">$1,997</div>
+      <div class="mc-price-sub">per year · rate locked for life</div>
+      <p>Quarterly bot reviews and updates whenever Florida law changes. No sessions. Just the work.</p>
+      <ul>
+        <li style="border-bottom-color:var(--border);">Quarterly reviews against current FL law</li>
+        <li>Updates pushed when material changes occur</li>
+        <li>All purchased bots covered</li>
+        <li>Written summary of every update</li>
+        <li>No calls or sessions required</li>
+      </ul>
+      <a href="#" class="btn-buy btn-buy-outline" style="display:block;text-align:center;">Add Maintenance Plan</a>
+    </div>
+
+    <div class="mem-card featured">
+      <div class="mc-eyebrow" style="color:var(--pink);">Full Support</div>
+      <h3>LAL Membership</h3>
+      <div class="mc-price" style="color:var(--pink);">$397<span style="font-size:18px;font-weight:400;">/mo</span></div>
+      <div class="mc-price-sub">or $3,500/year — save $264</div>
+      <p>Everything in maintenance plus monthly live sessions, group reviews, member rate, and early access.</p>
+      <ul>
+        <li>All bot updates and patches</li>
+        <li>Monthly live webinar + Q&A with Leisa</li>
+        <li>Two annual group bot review sessions</li>
+        <li>Member consulting rate: $300/hr vs $400/hr</li>
+        <li>First access to every new bot at launch</li>
+      </ul>
+      <a href="https://lp.constantcontactpages.com/sl/3526Fvo/legalauthoritylab" class="btn-buy btn-buy-primary" style="display:block;text-align:center;">Join Waitlist →</a>
+    </div>
+
+    <div class="mem-card">
+      <div class="mc-eyebrow" style="color:var(--orange);">Marketing Focus</div>
+      <h3>Marketing Membership</h3>
+      <div class="mc-price" style="color:var(--orange);">$297<span style="font-size:18px;font-weight:400;">/mo</span></div>
+      <div class="mc-price-sub">or $2,497/year</div>
+      <p>Monthly content strategy sessions and office hours. Built for attorneys running the marketing suite.</p>
+      <ul>
+        <li>Monthly live marketing strategy session</li>
+        <li>Monthly office hours with Leisa</li>
+        <li>Platform-specific content guidance</li>
+        <li>Founding rate locked for life</li>
+      </ul>
+      <a href="https://lp.constantcontactpages.com/sl/3526Fvo/legalauthoritylab" class="btn-buy btn-buy-outline" style="display:block;text-align:center;">Join Waitlist →</a>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  Legal Authority Lab &nbsp;·&nbsp; legalauthoritylab.com &nbsp;·&nbsp; A subsidiary of Family Matters Law Group, P.A. &nbsp;·&nbsp; FL Bar No. 64399<br>
+  Leisa Wintz, MS, Esq. &nbsp;·&nbsp; All bots are self-install and work on Claude Pro/Teams, ChatGPT Plus, and Microsoft Copilot Pro. Free tiers not supported.<br>
+  Questions? &nbsp;<a href="https://calendly.com/leisawintz/legal-authority-lab" style="color:var(--teal);text-decoration:none;">Book a free exploration call →</a>
+</footer>
+
+<script>
+function scrollTo(id, btn) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
+</body>
+</html>
